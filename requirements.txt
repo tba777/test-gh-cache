@@ -2,3 +2,5 @@ pytest
 gunicorn
 pydantic
 fastapi
+requests
+mypy
