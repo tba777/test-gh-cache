@@ -31,6 +31,7 @@ jobs:
             for (const cache of caches.data.actions_caches) {
               console.log("got cache", cache)
               const lastAccessedAt = new Date(Date.parse(cache.last_accessed_at))
+              consile.log("access time", lastAccessedAt)
               if (lastAccessedAt < dateThreshold) {
                 console.log("clear cache", cache)
                 github.rest.actions.deleteActionsCacheById({
