@@ -21,10 +21,12 @@ jobs:
           script: |
             const clearOlderThanDays = ${{ inputs.clear-older-than-days }}
             console.log("get list of caches for repository.")
-            const caches = await github.rest.actions.getActionsCacheList({
+            const requests = github.rest.actions.getActionsCacheList({
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
+            const caches = await github.paginate(requests)
+
             var dateThreshold = new Date()
             dateThreshold.setDate(dateThreshold.getDate() - clearOlderThanDays)
             console.log("threshold is", dateThreshold)
