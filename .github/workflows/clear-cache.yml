@@ -1,0 +1,43 @@
+name: Clear cache
+
+on:
+  workflow_dispatch:
+    inputs:
+      clear-older-than-days:
+        description: "Older than days"
+        type: number
+        default: 2
+
+permissions:
+  actions: write
+
+jobs:
+  clear-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clear cache
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const clearOlderThanDays = ${{ inputs.clear-older-than-days }}
+            console.log("get list of caches for repository.")
+            const caches = await github.rest.actions.getActionsCacheList({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+            var dateThreshold = new Date()
+            dateThreshold.setDate(dateThreshold.getDate() - clearOlderThanDays)
+            console.log("threshold is", dateThreshold)
+            for (const cache of caches.data.actions_caches) {
+              console.log("got cache", cache)
+              const lastAccessedAt = new Date(Date.parse(cache.last_accessed_at))
+              if (lastAccessedAt < dateThreshold) {
+                console.log("clear cache", cache)
+                github.rest.actions.deleteActionsCacheById({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  cache_id: cache.id,
+                })
+              }
+            }
+            console.log("Clear completed")
