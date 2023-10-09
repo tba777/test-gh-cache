@@ -1,2 +1,1 @@
-# test-gh-cache
-Test GH cache
+# Test GH cache
