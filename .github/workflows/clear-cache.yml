@@ -33,7 +33,6 @@ jobs:
               direction: "asc",
             })
             const caches = await github.paginate(opts)
-            console.log(caches);
 
             for (const cache of caches) {
               const lastAccessedAt = new Date(Date.parse(cache.last_accessed_at))
