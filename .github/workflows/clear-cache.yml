@@ -32,7 +32,7 @@ jobs:
               sort: "last_accessed_at",
               direction: "asc",
             })
-            const caches = await github.paginate(ops)
+            const caches = await github.paginate(opts)
             console.log(caches);
 
             for (const cache of caches.data.actions_caches) {
