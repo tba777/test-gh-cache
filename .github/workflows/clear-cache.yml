@@ -25,13 +25,15 @@ jobs:
             console.log("threshold:", dateThreshold)
 
             console.log("get list of caches for repository.")
-            const caches = await github.paginate.iterator(github.rest.actions.getActionsCacheList, {
+            const opts = github.rest.actions.getActionsCacheList.endpoint.merge({
               owner: context.repo.owner,
               repo: context.repo.repo,
               per_page: 100,
               sort: "last_accessed_at",
               direction: "asc",
             })
+            const caches = await github.paginate(ops)
+            console.log(caches);
 
             for (const cache of caches.data.actions_caches) {
               const lastAccessedAt = new Date(Date.parse(cache.last_accessed_at))
