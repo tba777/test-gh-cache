@@ -26,8 +26,8 @@ jobs:
             console.log("threshold:", dateThreshold)
 
             const usage = await github.rest.actions.getActionsCacheUsage({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              owner: "EmesaDEV",
+              repo: "max",
             })
             console.log("usage:", usage)
 
