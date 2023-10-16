@@ -25,7 +25,7 @@ jobs:
             dateThreshold.setDate(dateThreshold.getDate() - clearOlderThanDays)
             console.log("threshold:", dateThreshold)
 
-            const usage = github.rest.actions.getActionsCacheUsage({
+            const usage = await github.rest.actions.getActionsCacheUsage({
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
