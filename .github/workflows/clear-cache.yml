@@ -19,10 +19,17 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+          
             const clearOlderThanDays = ${{ inputs.clear-older-than-days }}
             var dateThreshold = new Date()
             dateThreshold.setDate(dateThreshold.getDate() - clearOlderThanDays)
             console.log("threshold:", dateThreshold)
+
+            const usage = github.rest.actions.getActionsCacheUsage({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            })
+            console.log("usage:", usage)
 
             console.log("get list of caches for repository.")
             const opts = github.rest.actions.getActionsCacheList.endpoint.merge({
