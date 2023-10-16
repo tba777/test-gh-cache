@@ -29,7 +29,10 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            console.log("current cache usage is: %f MB", (usage.data.active_caches_size_in_bytes / 1024.0 / 1024.0).toFixed(2)
+            console.log(
+              "current cache usage is: %f MB",
+              (usage.data.active_caches_size_in_bytes / 1024.0 / 1024.0).toFixed(2)
+            )
             if (usage.data.active_caches_size_in_bytes < ${{ inputs.size-threshold }} * 1024 * 1024 ) {
               console.log("size is too small, exiting")
               return
