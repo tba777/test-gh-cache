@@ -1,6 +1,8 @@
 name: Clear cache
 
 on:
+  schedule:
+    - cron: "* * * * *"
   workflow_dispatch:
     inputs:
       clear-older-than-days:
@@ -11,8 +13,6 @@ on:
         description: "Size threshold in MB"
         type: number
         default: 9216
-  schedule:
-    - cron: "* * * * *"
 
 permissions:
   actions: write
