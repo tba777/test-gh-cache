@@ -2,7 +2,7 @@ name: Clear cache
 
 on:
   schedule:
-    - cron: "* * * * *"
+    - cron: "20-30 * * * *"
   workflow_dispatch:
     inputs:
       clear-older-than-days:
