@@ -33,12 +33,12 @@ jobs:
               "current cache usage is: %f MB",
               (usage.data.active_caches_size_in_bytes / 1024.0 / 1024.0).toFixed(2)
             )
-            if (usage.data.active_caches_size_in_bytes < ${{ inputs.size-threshold }} * 1024 * 1024 ) {
+            if (usage.data.active_caches_size_in_bytes < ${{ inputs.size-threshold || 9216 }} * 1024 * 1024 ) {
               console.log("size is too small, exiting")
               return
             }
             
-            const clearOlderThanDays = ${{ inputs.clear-older-than-days }}
+            const clearOlderThanDays = ${{ inputs.clear-older-than-days || 2 }}
             var dateThreshold = new Date()
             dateThreshold.setDate(dateThreshold.getDate() - clearOlderThanDays)
             console.log("threshold:", dateThreshold)
