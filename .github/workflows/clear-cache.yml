@@ -7,6 +7,12 @@ on:
         description: "Older than days"
         type: number
         default: 2
+      size-threshold:
+        description: "Size threshold in MB"
+        type: number
+        default: 9216
+  schedule:
+    - cron: "* * * * *"
 
 permissions:
   actions: write
@@ -19,18 +25,16 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-          
-            const clearOlderThanDays = ${{ inputs.clear-older-than-days }}
-            const sizeThreshold = 9 * 1024 * 1024 * 1024;
-            var dateThreshold = new Date()
-            dateThreshold.setDate(dateThreshold.getDate() - clearOlderThanDays)
-            console.log("threshold:", dateThreshold)
-
             const usage = await github.rest.actions.getActionsCacheUsage({
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            console.log("usage: %fMB", usage.active_caches_size_in_bytes / 1024.0 / 1024.0)
+            console.log("current cache usage is: %f MB", usage.active_caches_size_in_bytes)
+            
+            const clearOlderThanDays = ${{ inputs.clear-older-than-days }}
+            var dateThreshold = new Date()
+            dateThreshold.setDate(dateThreshold.getDate() - clearOlderThanDays)
+            console.log("threshold:", dateThreshold)
 
             console.log("get list of caches for repository.")
             const opts = github.rest.actions.getActionsCacheList.endpoint.merge({
