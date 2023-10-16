@@ -29,7 +29,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            console.log("current cache usage is: %f MB", usage.active_caches_size_in_bytes)
+            console.log("current cache usage is: %f MB", usage.data.active_caches_size_in_bytes)
             
             const clearOlderThanDays = ${{ inputs.clear-older-than-days }}
             var dateThreshold = new Date()
