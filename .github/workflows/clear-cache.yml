@@ -29,7 +29,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            console.log("usage:", usage)
+            console.log("usage:", usage.active_caches_size_in_bytes / 1024 / 1024)
 
             console.log("get list of caches for repository.")
             const opts = github.rest.actions.getActionsCacheList.endpoint.merge({
