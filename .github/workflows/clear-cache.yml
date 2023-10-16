@@ -3,6 +3,16 @@ name: Clear cache
 on:
   schedule:
     - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      clear-older-than-days:
+        description: "Older than days"
+        type: number
+        default: 2
+      size-threshold:
+        description: "Size threshold in MB"
+        type: number
+        default: 9216
 
 permissions:
   actions: write
@@ -15,9 +25,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const sizeThreshold = 9216 * 1024 * 1024
-            const clearOlderThanDays = 2
-            
             const usage = await github.rest.actions.getActionsCacheUsage({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -26,11 +33,12 @@ jobs:
               "current cache usage is: %f MB",
               (usage.data.active_caches_size_in_bytes / 1024.0 / 1024.0).toFixed(2)
             )
-            if (usage.data.active_caches_size_in_bytes < sizeThreshold ) {
+            if (usage.data.active_caches_size_in_bytes < ${{ inputs.size-threshold || 9216 }} * 1024 * 1024 ) {
               console.log("size is too small, exiting")
               return
             }
             
+            const clearOlderThanDays = ${{ inputs.clear-older-than-days || 2 }}
             var dateThreshold = new Date()
             dateThreshold.setDate(dateThreshold.getDate() - clearOlderThanDays)
             console.log("threshold:", dateThreshold)
