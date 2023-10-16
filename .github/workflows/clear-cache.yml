@@ -30,8 +30,8 @@ jobs:
               repo: context.repo.repo,
             })
             console.log("current cache usage is: %f MB", usage.data.active_caches_size_in_bytes / 1024.0 / 1024.0)
-            if usage.data.active_caches_size_in_bytes < 100 {
-              console.log("size is too small, exiting");
+            if (usage.data.active_caches_size_in_bytes < 100) {
+              console.log("size is too small, exiting")
               return
             }
             
