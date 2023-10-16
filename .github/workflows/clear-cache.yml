@@ -21,6 +21,7 @@ jobs:
           script: |
           
             const clearOlderThanDays = ${{ inputs.clear-older-than-days }}
+            const sizeThreshold = 9 * 1024 * 1024 * 1024;
             var dateThreshold = new Date()
             dateThreshold.setDate(dateThreshold.getDate() - clearOlderThanDays)
             console.log("threshold:", dateThreshold)
@@ -29,7 +30,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             })
-            console.log("usage:", usage.active_caches_size_in_bytes / 1024 / 1024)
+            console.log("usage: %fMB", usage.active_caches_size_in_bytes / 1024.0 / 1024.0)
 
             console.log("get list of caches for repository.")
             const opts = github.rest.actions.getActionsCacheList.endpoint.merge({
