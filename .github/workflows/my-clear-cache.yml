@@ -13,3 +13,11 @@ jobs:
           node-version: '14'
       - run: npm install -g bats
       - run: bats -v
+  
+  view_context_attributes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: View context attributes
+        uses: actions/github-script@v6
+        with:
+          script: console.log(context)
