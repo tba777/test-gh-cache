@@ -1,13 +1,13 @@
-name: View Context Attributes
-
-on:
-  workflow_dispatch
-
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
 jobs:
-  view_context_attributes:
+  check-bats-version:
     runs-on: ubuntu-latest
     steps:
-      - name: View context attributes
-        uses: actions/github-script@v6
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
         with:
-          script: console.log(context)
+          node-version: '14'
+      - run: npm install -g bats
+      - run: bats -v
