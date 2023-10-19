@@ -32,4 +32,12 @@ jobs:
         run: echo "Runner OS ${{ runner.os }}"
       - name: Who did this repository create by
         run: echo "Repository Owner ${{ github.repository_owner }}"
+
+  show_all_the_values_of_event:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          EVENT_CONTEXT: ${{ toJSON(github.event) }}
+        run: |
+          echo $EVENT_CONTEXT
   
