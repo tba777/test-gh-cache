@@ -21,3 +21,15 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: console.log(context)
+
+  show-the-runner-information:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Runner version
+        run: echo "Runner Version ${{ runner.arch }}"
+      - name: Runner os
+        run: echo "Runner OS ${{ runner.os }}"
+      - name: Who did this repository create by
+        run: echo "Repository Owner ${{ github.repository_owner }}"
+  
